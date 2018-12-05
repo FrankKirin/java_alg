@@ -21,25 +21,25 @@ package dynamic_programming.zero_one_package_problem;
 class ZeroOnePackageProblem{
     
     public static void main(String[] args){
-        int[] value = {8,10,6,3,7,2};
-        int[] weight = {4,6,2,2,5,1};
-        int package_capatity = 12;
+        int[] weight = {2, 2, 6, 5, 4};
+        int[] value = {6, 3, 5, 4, 6};
+        int package_capatity = 10;
 
         int[][] m = new int[value.length+1][package_capatity+1];
 
         for(int i=1; i<=weight.length; i++) {
-            for(int j=package_capatity; j>0; j--) {
+        	for(int j=1; j<=package_capatity; j++) {
                 if(weight[i-1] > j) {
                     m[i][j]=m[i-1][j];
                 }
                 else{
-                    Math.max(m[i-1][j], m[i-1][j] + value[i-1]);
+                    m[i][j] = Math.max(m[i-1][j], m[i-1][j-weight[i-1]] + value[i-1]);
                 }
             }
         }
 
-        for(int i=0; i<weight.length; i++) {
-            for(int j=0; j<package_capatity; j++) {
+        for(int i=0; i<=weight.length; i++) {
+            for(int j=0; j<=package_capatity; j++) {
                 System.out.printf("%5d", m[i][j]);
             }
             System.out.println();
