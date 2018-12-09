@@ -6,11 +6,11 @@ import java.util.Set;
 public class SingleSoutceShortestPath {
 	public static final Double NaN = Double.NaN;
 	
-	public int getMinValueLargeThanZero(double[] distance) {
+	public int getMinValueLtSpecifiedValue(Double v, double[] distance) {
 		int value = Integer.MAX_VALUE;
 
 		for(int i=0; i<distance.length; i++) {
-			if(distance[i] < value && distance[i]>0) {
+			if(distance[i] < value && distance[i]>v) {
 				value = i;
 			}
 		}
@@ -33,18 +33,16 @@ public class SingleSoutceShortestPath {
 	public void updateDistance(double[] distance, Set<Integer> unicomDistanceIndex, int current_index, int shortest_path_index, double[][] distanceMap) {
 		for (int idx: unicomDistanceIndex) {
 			System.out.println(idx);
-//			if (distanceMap[current_index][idx] == NaN) {
-//				distance[idx] = distanceMap[current_index][idx];
-//			}
-//			else {
-//				distance[idx] = Math.min(distanceMap[shortest_path_index][idx]+distanceMap[current_index][shortest_path_index], distanceMap[current_index][idx]);
-//			}
+			if (distanceMap[current_index][idx] == NaN) {
+				distance[idx] = distanceMap[current_index][idx];
+			}
+			else {
+				distance[idx] = Math.min(distanceMap[shortest_path_index][idx]+distanceMap[current_index][shortest_path_index], distanceMap[current_index][idx]);
+			}
 		}
 		System.out.print("###");
 		
 	}
-
-
 
 	public static void main(String[] args) {
 		SingleSoutceShortestPath shortestPath = new SingleSoutceShortestPath();
@@ -62,7 +60,7 @@ public class SingleSoutceShortestPath {
 
 		for (int i=0; i<distanceMap[0].length; i++) {
 //			double[] distance = distanceMap[i];
-			int shortest_path_index = shortestPath.getMinValueLargeThanZero(distance);
+			int shortest_path_index = shortestPath.getMinValueLarge(distance);
 
 			Set<Integer> unicomDistanceSet = shortestPath.getUnicomDistanceIndex(distanceMap[shortest_path_index]);
 
